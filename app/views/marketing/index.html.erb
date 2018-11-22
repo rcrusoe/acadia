@@ -20,3 +20,35 @@
     </div>
   </div>
 </div>
+
+<script type="module">
+  import animate from "https://cdn.jsdelivr.net/npm/animateplus@2/animateplus.js";
+
+  const random = (min, max) =>
+    Math.random() * (max - min) + min;
+
+  const createElements = (total, elements = [], wrap = document.createDocumentFragment()) => {
+    if (!total) {
+      document.body.appendChild(wrap);
+      return elements;
+    }
+    const element = document.createElement("img");
+    element.classList.add('sock');
+    element.src = "<%= asset_path 'sock.svg' %>";
+    element.style.left = `${random(-3, 99)}%`;
+    elements.push(element);
+    wrap.appendChild(element);
+    return createElements(total - 1, elements, wrap);
+  };
+
+  const elements = createElements(20);
+
+  animate({
+    elements,
+    duration: 4000,
+    delay: index => index * 300,
+    easing: "linear",
+    loop: true,
+    transform: ["translateY(60px) scale(1) rotate(0deg)", `-100 0 360`]
+  });
+</script>
